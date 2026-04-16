@@ -23,8 +23,8 @@ cd mssql-mcp-server
 ```
 ## Project Files
 Download or copy the following files into your project folder:
-1. [package.json](https://github.com/ravinderyadav347/Calude-MSSQL-MCP-Server/blob/main/package.json)
-2. [index.js](https://github.com/ravinderyadav347/Calude-MSSQL-MCP-Server/blob/main/index.js)
+1. [package.json](https://github.com/ravindercitixsys/Calude-MSSQL-MCP-Server/blob/main/package.json)
+2. [index.js](https://github.com/ravindercitixsys/Calude-MSSQL-MCP-Server/blob/main/index.js)
 
 Copy both `package.json` and `index.js` into the `mssql-mcp-server` folder.
 
