@@ -65,8 +65,7 @@ Update the file path to match your local folder, then save the file and restart 
     "mssql": {
       "command": "node",
       "args": ["C:/path/to/your/mssql-mcp-server/index.js"]
-      ]
-    }
+          }
   }
 }
 ```    
