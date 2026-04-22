@@ -68,7 +68,133 @@ Update the file path to match your local folder, then save the file and restart 
           }
   }
 }
-```    
+```
+---
+
+## Additional Scenario — Named Instance & Custom Port
+
+In some cases, your SQL Server may:
+
+- Run on a **named instance** (e.g., `localhost\sql2022`)
+- Use a **custom or dynamic port** instead of default `1433`
+
+Follow the correct configuration based on your setup.
+
+---
+
+### Case 1 — Named Instance
+
+If your SQL Server instance is like:
+
+```
+localhost\sql2022
+```
+
+Update your `index.js`:
+
+```js
+const sqlConfig = {
+  server: "localhost\\sql2022",
+  database: "DB_Name",
+  user: "user",
+  password: "password",
+  options: {
+    trustServerCertificate: true,
+    enableArithAbort: true,
+  },
+};
+```
+
+**Note:**
+- Use `\\` (double backslash) in JavaScript
+- SQL Server Browser service should be running
+
+---
+
+### Case 2 — Named Instance with Custom Port (Recommended)
+
+If your instance is running on a specific port (for example: `51432`), use **server + port**.
+
+```js
+const sqlConfig = {
+  server: "localhost",
+  port: 51432,
+  database: "DB_Name",
+  user: "user",
+  password: "password",
+  options: {
+    trustServerCertificate: true,
+    enableArithAbort: true,
+  },
+};
+```
+
+**Note:**
+- Do not use instance name when using port
+- This is more stable for MCP connections
+
+---
+
+### How to find the port number
+
+#### Option 1 — SQL Query
+
+```sql
+SELECT local_tcp_port 
+FROM sys.dm_exec_connections 
+WHERE session_id = @@SPID;
+```
+
+#### Option 2 — SQL Server Configuration Manager
+
+Go to:
+
+```
+SQL Server Network Configuration
+→ Protocols for your instance → TCP/IP → IP Addresses
+```
+
+Check:
+- `TCP Dynamic Ports`
+- `TCP Port`
+
+---
+
+### Recommended (Best Practice)
+
+For stable connection:
+
+- Set a static port (e.g., `1433`)
+- Clear `TCP Dynamic Ports`
+- Restart SQL Server
+
+Then use:
+
+```js
+server: "localhost",
+port: 1433
+```
+
+---
+
+### Test before using MCP
+
+Test connection in SSMS:
+
+- Using instance:
+  ```
+  localhost\sql2022
+  ```
+
+- Using port:
+  ```
+  localhost,51432
+  ```
+
+If it works in SSMS, it will work in MCP.
+
+---
+
 ## Available MCP Tools Once Connected
 
 | Tool | What it does |
